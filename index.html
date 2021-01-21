@@ -71,6 +71,19 @@
       font-family: "Karla", sans-serif;
       background-color: #E5A500;
     }
+
+    .tabTextColor {
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    .selectedTab {
+      border-left: 3px solid #122632;
+      color: #122632;
+    }
+
+    .illustrationBox {
+      border: 1px solid red;
+    }
   </style>
   <script>
     var styles = "";
@@ -110,6 +123,7 @@
 
     $(document).ready(function () {
       $("#result").hide();
+      $("#inputsTab").addClass("selectedTab")
       toggleButton();
       $("#styles").keyup(function () {
         styles = $(this).val();
@@ -129,9 +143,12 @@
       $("#reenter").click(function () {
         $("#inputForm").show();
         $("#result").hide();
+        $("#inputsTab").addClass("selectedTab")
+        $("#resultTab").removeClass("selectedTab")
       });
 
       $("#calculate-button").click(function () {
+
         if (styles !== "" && units !== "" && people !== "") {
           const averageRRP = costPerUnit * rrpMark;
           const totalUnits = styles * units;
@@ -183,7 +200,10 @@
           $("#prdManCostTotal").text(currency + ' ' + getToLocalString(prdManagerCostTotal));
           $("#costPerhr").text(currency + ' ' + getToLocalString(prdManagerCostPerHR));
           $("#result").show();
+          $("#inputsTab").removeClass("selectedTab")
           $("#inputForm").hide();
+          $("#resultTab").addClass("selectedTab")
+
         } else {
           alert("please fill the fields");
         }
@@ -193,7 +213,14 @@
 </head>
 
 <body>
-  <div class="flex justify-center">
+  <div class="flex">
+    <div class="w-3/12 flex flex-col">
+      <div class="flex flex-col ml-10 mt-10">
+        <p id='inputsTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Inputs</p>
+        <p id='resultTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Results</p>
+      </div>
+      <div class='flex h-56 m-1 mt-5 illustrationBox'></div>
+    </div>
     <div id="inputForm" class="bg-gray-100 formContainer flex flex-col py-10 px-16">
       <p class="text-4xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
       <form>
@@ -282,14 +309,14 @@
       <div class="field-container mb-4">
         <p>
           <!-- <b>Gross Cost Saved: </b> -->
-          we can save you
+          We can save you
           <span id="grossCostSaved"></span> per year
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
           <!-- <b>Man Hrs Saved (per year): </b>  -->
-          that's
+          That's
           <span id="timeSaved"></span> hrs of your time or
           <span id="peopleSaved"></span> people of full time per year
         </p>
