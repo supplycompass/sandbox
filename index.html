@@ -66,6 +66,24 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
+
+    .yellowButton {
+      font-family: "Karla", sans-serif;
+      background-color: #E5A500;
+    }
+
+    .tabTextColor {
+      color: rgba(0, 0, 0, 0.54);
+    }
+
+    .selectedTab {
+      border-left: 3px solid #122632;
+      color: #122632;
+    }
+
+    .illustrationBox {
+      border: 1px solid red;
+    }
   </style>
   <script>
     var styles = "";
@@ -75,7 +93,8 @@
     const rrpMark = 4;
     const prdManagersalary = 40000;
     const timedSavedUsingSC = 0.5;
-    const currency = "£";
+    const params = new URLSearchParams(window.location.search)
+    const currency = params.get('currency') || "£";
     const pricingValues = {
       name: ["seed", "sapling", "canopy", "rainforest"],
       stylesStored: [10, 100, 500, 2000],
@@ -89,6 +108,10 @@
       );
     }
 
+    function getToLocalString(x) {
+      return Number(x).toLocaleString()
+    }
+
     function toggleButton() {
       if (people && units && styles) {
         $('#calculate-button').prop('disabled', false);
@@ -100,6 +123,7 @@
 
     $(document).ready(function () {
       $("#result").hide();
+      $("#inputsTab").addClass("selectedTab")
       toggleButton();
       $("#styles").keyup(function () {
         styles = $(this).val();
@@ -119,9 +143,12 @@
       $("#reenter").click(function () {
         $("#inputForm").show();
         $("#result").hide();
+        $("#inputsTab").addClass("selectedTab")
+        $("#resultTab").removeClass("selectedTab")
       });
 
       $("#calculate-button").click(function () {
+
         if (styles !== "" && units !== "" && people !== "") {
           const averageRRP = costPerUnit * rrpMark;
           const totalUnits = styles * units;
@@ -134,10 +161,10 @@
           const annualCostMangProd = prdManagerCostTotal * people;
           const prdManCostPerStyle = (annualCostMangProd / styles).toFixed(2);
           const prdManCostPerUnit = (annualCostMangProd / totalUnits).toFixed(2);
-          const perRevenueSpentOnMangProd = (
+          const perRevenueSpentOnMangProd = Math.round(
             (annualCostMangProd / revenue) *
             100
-          ).toFixed(2);
+          );
           const manhrsSaved = parseInt(styles * prdManTimePerStyle * timedSavedUsingSC);
           const grossCostSaved = timedSavedUsingSC * annualCostMangProd;
           const peopleSaved = parseInt(manhrsSaved / (2080 * 0.75));
@@ -149,29 +176,34 @@
           );
           const savedonOnePrice = parseInt(netSaving / subscriptionCost);
 
-          $("#avgRRP").text(averageRRP + currency);
-          $("#gmv").text(gmv + currency);
-          $("#revenue").text(revenue + currency);
-          $("#totalUnits").text(totalUnits);
-          $("#prdManTimePerStyle").text(prdManTimePerStyle);
-          $("#prdManCostPerStyle").text(prdManCostPerStyle + currency);
-          $("#costSpentManagement").text(annualCostMangProd + currency);
-          $("#prdManCostPerUnit").text(prdManCostPerUnit + currency);
+          $("#avgRRP").text(currency + ' ' + averageRRP);
+          $("#gmv").text(currency + ' ' + getToLocalString(gmv));
+          $("#revenue").text(currency + ' ' + getToLocalString(revenue));
+          $("#totalUnits").text(getToLocalString(totalUnits));
+          $("#prdManTimePerStyle").text(getToLocalString(prdManTimePerStyle));
+          $("#prdManCostPerStyle").text(currency + ' ' + getToLocalString(prdManCostPerStyle));
+          $("#costSpentManagement").text(currency + ' ' + getToLocalString(annualCostMangProd));
+
+
+          $("#prdManCostPerUnit").text(currency + ' ' + getToLocalString(prdManCostPerUnit));
           $("#revenueSpentOnManage").text(perRevenueSpentOnMangProd + "%");
-          $("#timeSavedSC").text(timedSavedUsingSC * 100 + "%");
-          $("#grossCostSaved").text(grossCostSaved + currency);
+          // $("#timeSavedSC").text(timedSavedUsingSC * 100 + "%");
+          $("#grossCostSaved").text(currency + ' ' + getToLocalString(grossCostSaved));
           $("#timeSaved").text(manhrsSaved);
           $("#peopleSaved").text(peopleSaved);
-          $("#subscriptionCost").text(subscriptionCost + currency);
-          $("#netSavings").text(netSaving + currency);
+          $("#subscriptionCost").text(currency + ' ' + getToLocalString(subscriptionCost));
+          $("#netSavings").text(currency + ' ' + getToLocalString(netSaving));
           $("#returnCost").text(returnOnInvestment + "%");
-          $("#moneyReturnPerone").text(savedonOnePrice + currency);
-          $("#salary").text(prdManagersalary + currency);
-          $("#overheads").text(prdManagerOverHead + currency);
-          $("#prdManCostTotal").text(prdManagerCostTotal + currency);
-          $("#costPerhr").text(prdManagerCostPerHR + currency);
+          $("#moneyReturnPerone").text(currency + ' ' + getToLocalString(savedonOnePrice));
+          $("#salary").text(currency + ' ' + getToLocalString(prdManagersalary));
+          $("#overheads").text(currency + ' ' + getToLocalString(prdManagerOverHead));
+          $("#prdManCostTotal").text(currency + ' ' + getToLocalString(prdManagerCostTotal));
+          $("#costPerhr").text(currency + ' ' + getToLocalString(prdManagerCostPerHR));
           $("#result").show();
+          $("#inputsTab").removeClass("selectedTab")
           $("#inputForm").hide();
+          $("#resultTab").addClass("selectedTab")
+
         } else {
           alert("please fill the fields");
         }
@@ -181,7 +213,14 @@
 </head>
 
 <body>
-  <div class="flex justify-center">
+  <div class="flex">
+    <div class="w-3/12 flex flex-col">
+      <div class="flex flex-col ml-10 mt-10">
+        <p id='inputsTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Inputs</p>
+        <p id='resultTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Results</p>
+      </div>
+      <div class='flex h-56 m-1 mt-5 illustrationBox'></div>
+    </div>
     <div id="inputForm" class="bg-gray-100 formContainer flex flex-col py-10 px-16">
       <p class="text-4xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
       <form>
@@ -207,8 +246,8 @@
       </div>
     </div>
     <div id="result" class="bg-gray-100 formContainer flex flex-col p-10 text-base Karla">
-      <p class="text-4xl cooper font-bold mb-4">Results</p>
-      <div class="field-container mb-4">
+      <p class="text-4xl cooper font-bold mb-4">Based on your inputs and our industry data:</p>
+      <!-- <div class="field-container mb-4">
         <p><b>Average RRP:</b> <span id="avgRRP"></span></p>
       </div>
       <div class="field-container mb-4">
@@ -219,58 +258,65 @@
       </div>
       <div class="field-container mb-4">
         <p><b>Total Units: </b><span id="totalUnits"></span></p>
-      </div>
+      </div> -->
       <div class="field-container mb-4">
         <p>
-          <b>Prod Man Time per Style (hrs): </b>You spend
+          <!-- <b>Prod Man Time per Style (hrs): </b> -->
+          You spend
           <span id="prdManTimePerStyle"></span>
           hrs managing production for EACH style you bring to market
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
-          <b>Prod Man Cost per Style (£): </b>This costs you
+          <!-- <b>Prod Man Cost per Style (£): </b> -->
+          This costs you
           <span id="prdManCostPerStyle"></span> for EACH style you bring to
           market
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
-          <b>Annual Cost Spent Managing Production: </b>That's
+          <!-- <b>Annual Cost Spent Managing Production: </b> -->
+          That's
           <span id="costSpentManagement"></span>
           per year managing production
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
-          <b>Prod Man Cost per unit (£): </b>That's the first
+          <!-- <b>Prod Man Cost per unit (£): </b> -->
+          That's the first
           <span id="prdManCostPerUnit"></span> of every product you sell
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
-          <b>% of Revenue spent Managing Production: </b>You're spending approx
+          <!-- <b>% of Revenue spent Managing Production: </b> -->
+          You're spending approx
           <span id="revenueSpentOnManage"></span> of your total revenue on
           managing production
         </p>
       </div>
 
-      <p class="text-2xl cooper font-bold mb-4">Supply Compass Value:</p>
+      <p class="text-2xl cooper font-bold mb-4">SupplyCompass can streamline your Production:</p>
+      <!-- <div class="field-container mb-4">
+          <p>
+            <b>Time Saved using SC Platform: </b>
+            <span id="timeSavedSC"></span>
+          </p>
+        </div> -->
       <div class="field-container mb-4">
         <p>
-          <b>Time Saved using SC Platform: </b>
-          <span id="timeSavedSC"></span>
-        </p>
-      </div>
-      <div class="field-container mb-4">
-        <p>
-          <b>Gross Cost Saved: </b>SupplyCompass can save you
+          <!-- <b>Gross Cost Saved: </b> -->
+          We can save you
           <span id="grossCostSaved"></span> per year
         </p>
       </div>
       <div class="field-container mb-4">
         <p>
-          <b>Man Hrs Saved (per year): </b> that's
+          <!-- <b>Man Hrs Saved (per year): </b>  -->
+          That's
           <span id="timeSaved"></span> hrs of your time or
           <span id="peopleSaved"></span> people of full time per year
         </p>
@@ -278,28 +324,31 @@
 
       <div class="field-container mb-4">
         <p>
-          <b>Supply Compass subscription: </b> And all it will cost you is
+          <!-- <b>Supply Compass subscription: </b>  -->
+          And all it will cost you is
           <span id="subscriptionCost"></span>
         </p>
       </div>
 
       <div class="field-container mb-4">
         <h2>
-          <b>Net Savings: </b> That's a net saving of
+          <!-- <b>Net Savings: </b>  -->
+          That's a net saving of
           <span id="netSavings"></span> every year
         </h2>
       </div>
 
       <div class="field-container mb-4">
         <p>
-          <b>Return on investment: </b> That's a
+          <!-- <b>Return on investment: </b>  -->
+          That's a
           <span id="returnCost"></span> Return on investment. Put another way,
           for every £1 you spend with SupplyCompass you save
           <span id="moneyReturnPerone"></span>
         </p>
       </div>
 
-      <p class="text-2xl cooper font-bold mb-4">Production Manager Costs:</p>
+      <!-- <p class="text-2xl cooper font-bold mb-4">Production Manager Costs:</p>
       <div class="field-container mb-4">
         <p>
           <b>Salary: </b>
@@ -323,10 +372,20 @@
           <b>Cost per hr:</b>
           <span id="costPerhr"></span>
         </p>
+      </div> -->
+      <div class='flex mt-2'>
+        <a href="https://platform.supplycompass.com/register/1" target="_blank" rel="noopener noreferrer">
+          <button
+            class="greenButton text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Start
+            Free Trail</button></a>
+        <a href="https://www.supplycompass.com/about/#contact" target="_blank" rel="noopener noreferrer"> <button
+            class="yellowButton ml-5 text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Speak
+            to Sales</button>
+        </a>
       </div>
-      <div>
+      <div class='mt-2'>
         <button id="reenter"
-          class="greenButton text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Recalulate</button>
+          class="text-sm underline flex items-center capitalize font-semibold rounded-sm">Recalulate</button>
       </div>
     </div>
   </div>
