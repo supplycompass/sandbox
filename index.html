@@ -211,6 +211,14 @@
           $("#inputsTab").removeClass("selectedTab")
           $("#inputForm").hide();
           $("#resultTab").addClass("selectedTab")
+          if (netSaving < 0) {
+            $('#negativeResult').show()
+            $('#streamLineResult').hide()
+          }
+          else {
+            $('#negativeResult').hide()
+            $('#streamLineResult').show()
+          }
 
         } else {
           alert("please fill the fields");
@@ -263,10 +271,15 @@
 
       <p class="text-2xl cooper font-bold mb-4">SupplyCompass can streamline your Production:</p>
 
-      <p>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your time.<br /><br />
+      <p id='streamLineResult'>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your
+        time.<br /><br />
         Giving you a <b>net saving of <span id="netSavings"></span></b> every year.<br /><br />
         That's a <b><span id="returnCost"></span> return on investment</b> in our platform.</p>
-
+      <p id='negativeResult' class='border-l-4 border-gray-400 p-2'>By our calculations, you manage your production very
+        effectively.
+        We'd love to speak to you
+        about the other ways
+        SupplyCompass can help your business grow.</p>
 
       <div class='flex mt-6'>
         <a href="https://platform.supplycompass.com/register/1" rel="noopener noreferrer">
