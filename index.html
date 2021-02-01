@@ -8,6 +8,8 @@
   </link>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </link>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <style>
     label {
       color: rgba(0, 0, 0, 0.54);
@@ -236,15 +238,15 @@
       <p class="text-4xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
       <form>
         <div class="flex flex-col mb-4">
-          <label class="text-base mb-1">How many styles do you produce per year?</label>
+          <label class=mb-1">How many styles do you produce per year?</label>
           <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
         </div>
         <div class="flex flex-col mb-4">
-          <label class="text-base mb-1">How many units (on average) do you produce per style?</label>
+          <label class=mb-1">How many units (on average) do you produce per style?</label>
           <input id="units" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
         </div>
         <div class="flex flex-col mb-4">
-          <label class="text-base mb-1">How many people work in your production team? (production managers, designers,
+          <label class=mb-1">How many people work in your production team? (production managers, designers,
             creative director etc.)
             <!-- (Designers, Product
             Dev,Garment Tech, Production Managers, Merchandisers) -->
@@ -254,10 +256,11 @@
       </form>
       <div>
         <button id="calculate-button"
-          class="greenButton text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Calculate</button>
+          class="greenButton text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm"
+          data-toggle="modal" data-target="#myModal">Calculate</button>
       </div>
     </div>
-    <div id="result" class="formContainer flex flex-col p-10 text-base Karla">
+    <div id="result" class="formContainer flex flex-col p-10 Karla">
       <p class="text-4xl cooper font-bold mb-4">Based on your inputs and our industry data:</p>
       <p class='mb-4'>
         As a business, you spend <b id="costSpentManagement"></b> per year managing production.<br /><br />
@@ -269,7 +272,7 @@
       </p>
 
 
-      <p class="text-2xl cooper font-bold mb-4">SupplyCompass can streamline your Production:</p>
+      <p class="text-3xl cooper font-bold my-6">SupplyCompass can streamline your Production:</p>
 
       <p id='streamLineResult'>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your
         time.<br /><br />
@@ -283,12 +286,11 @@
 
       <div class='flex mt-6'>
         <a href="https://platform.supplycompass.com/register/1" rel="noopener noreferrer">
-          <button
-            class="greenButton text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Start
+          <button class="greenButton text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Start
             Free Trail</button></a>
         <a href="https://supplycompass.com/about-supplycompass/#contact" rel="noopener noreferrer">
           <button
-            class="yellowButton ml-5 text-base text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Speak
+            class="yellowButton ml-5 text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Speak
             to Sales</button>
         </a>
       </div>
@@ -299,13 +301,25 @@
     </div>
     <div class="w-4/12 flex flex-col">
       <div class="flex flex-col ml-10 mt-10">
-        <p id='inputsTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Inputs</p>
-        <p id='resultTab' class='text-base pl-3 py-1 m-1 Karla tabTextColor'>Results</p>
+        <p id='inputsTab' class=pl-3 py-1 m-1 Karla tabTextColor'>Inputs</p>
+        <p id='resultTab' class=pl-3 py-1 m-1 Karla tabTextColor'>Results</p>
       </div>
       <div class='flex  m-1 mt-5'>
         <img src='https://public-uploads.supplycompass.com/assets/spend-calculator/ro-illustration.png
 ' alt='illustrations' />
       </div>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <div class="modal-content" style="height:520px;position: relative;">
+        <button type="button" style="position: absolute;top:10px;right:10px;" data-dismiss="modal"><i
+            class="fa fa-close text-xl"></i></button>
+        <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style="height:100%;width:100%"
+          frameborder="0" scrolling="no" id="iframe"></iframe>
+      </div>
+
     </div>
   </div>
 </body>
