@@ -41,23 +41,23 @@
 
     input {
       min-height: 40px;
-      margin-bottom: 1px;
-      border-bottom: 1px solid black;
+      padding-left: 5px;
+      /* margin-bottom: 1px; */
+      border: 2px solid #f6f6ff;
       outline: none;
+      border-radius: 3px;
     }
 
     input:hover {
-      margin-bottom: 0px;
-      border-bottom: 2px solid black;
+      border: 2px solid black;
     }
 
     input:focus {
-      margin-bottom: 0px;
-      border-bottom: 2px solid #3f51b5;
+      border: 2px solid #3f51b5;
     }
 
     .formContainer {
-      width: 66.66%;
+      width: 100%;
       min-height: 100vh;
     }
 
@@ -87,6 +87,20 @@
 
     .illustrationBox {
       border: 1px solid red;
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 15px;
+    }
+
+    .boxContainer {
+      box-shadow: 0px 0px 3px 0px grey;
+    }
+
+    .speaktosales {
+      text-decoration: none;
     }
   </style>
   <script>
@@ -132,7 +146,6 @@
 
       $("#people").val(people);
       $("#result").hide();
-      $("#inputsTab").addClass("selectedTab")
       toggleButton();
       $("#styles").keyup(function () {
         styles = $(this).val();
@@ -152,11 +165,9 @@
       $("#reenter").click(function () {
         $("#inputForm").show();
         $("#result").hide();
-        $("#inputsTab").addClass("selectedTab")
-        $("#resultTab").removeClass("selectedTab")
       });
 
-      $("#calculate-button").click(function () {
+      $("#close-and-calculate-button").click(function () {
 
         if (styles !== "" && units !== "" && people !== "") {
           const averageRRP = costPerUnit * rrpMark;
@@ -210,9 +221,7 @@
           $("#prdManCostTotal").text(currency + ' ' + getToLocalString(prdManagerCostTotal));
           $("#costPerhr").text(currency + ' ' + getToLocalString(prdManagerCostPerHR));
           $("#result").show();
-          $("#inputsTab").removeClass("selectedTab")
           $("#inputForm").hide();
-          $("#resultTab").addClass("selectedTab")
           if (netSaving < 0) {
             $('#negativeResult').show()
             $('#streamLineResult').hide()
@@ -232,96 +241,103 @@
 
 <body>
   <div class="flex relative bg-gray-100">
-    <a href='https://supplycompass.com/pricing/' class='absolute text-xl cursor-pointer' style="top:20px;right:20px">
+    <a href='https://supplycompass.com/pricing/' class='absolute text-3xl cursor-pointer' style="top:20px;right:20px">
       <i class="fa fa-close"></i></a>
-    <div id="inputForm" class="formContainer flex flex-col py-10 px-16">
-      <p class="text-4xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
-      <form>
-        <div class="flex flex-col mb-4">
-          <label class=mb-1">How many styles do you produce per year?</label>
-          <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+    <div class="formContainer flex flex-col items-center justify-center py-10 px-16">
+      <div style="width:70%">
+        <img class="logo" src='https://public-uploads.supplycompass.com/assets/platform/logo/logo-icon.svg'
+          alt='logo' />
+        <div id="inputForm">
+          <p class="text-5xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
+          <div class="flex justify-between w-full mt-8">
+            <div class="w-6/12">
+              <div class="boxContainer w-full bg-white p-8 rounded-lg">
+                <form>
+                  <div class="flex flex-col mb-4">
+                    <label class="mb-2">How many styles do you produce per year?</label>
+                    <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                  </div>
+                  <div class="flex flex-col mb-4">
+                    <label class="mb-2">How many units (on average) do you produce per style?</label>
+                    <input id="units" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                  </div>
+                  <div class="flex flex-col mb-4">
+                    <label class="mb-2">How many people work in your production team? (production managers, designers,
+                      creative director etc.)
+                    </label>
+                    <input id="people" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                  </div>
+                </form>
+                <div class="mt-10">
+                  <button id="calculate-button"
+                    class="greenButton w-full text-white flex items-center justify-center capitalize font-semibold py-3 px-6 rounded-sm"
+                    data-toggle="modal" data-target="#myModal">Calculate</button>
+                </div>
+              </div>
+            </div>
+            <div class='w-4/12 bg-gray-200 rounded-full p-10'>
+              <img src='https://public-uploads.supplycompass.com/assets/spend-calculator/ro-illustration.png
+          ' alt='illustrations' />
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col mb-4">
-          <label class=mb-1">How many units (on average) do you produce per style?</label>
-          <input id="units" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+        <div id="result">
+          <p class="text-5xl cooper font-bold mb-4">Based on your inputs and our industry data</p>
+          <div class="flex justify-between w-full mt-8">
+            <div class="boxContainer w-full w-full bg-white p-8 rounded-lg">
+              <p class='mb-4'>
+                As a business, you spend <b id="costSpentManagement"></b> per year managing production.<br /><br />
+                That's approx <b id="revenueSpentOnManage"></b> of your total revenue spent on managing production.
+                <br /><br />
+                You are spending <b id='hrsManagingProd'></b> hrs managing production.<br /><br /> That's <b
+                  id="prdManTimePerStyle"></b> hrs for
+                every style
+                you produce.
+              </p>
+              <p class="text-3xl cooper font-bold my-6">SupplyCompass can streamline your Production:</p>
+
+              <p id='streamLineResult'>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your
+                time.<br /><br />
+                Giving you a <b>net saving of <span id="netSavings"></span></b> every year.<br /><br />
+                That's a <b><span id="returnCost"></span> return on investment</b> in our platform.</p>
+              <p id='negativeResult' class='border-l-4 border-gray-400 p-2'>By our calculations, you manage your
+                production
+                very
+                effectively.
+                We'd love to speak to you
+                about the other ways
+                SupplyCompass can help your business grow.</p>
+              <div class='flex justify-between items-center mt-8'>
+                <div>
+                  <button id="reenter"
+                    class="text-sm underline flex items-center capitalize font-semibold rounded-sm">Recalulate</button>
+                </div>
+                <div class='flex'>
+                  <a href="https://platform.supplycompass.com/register/1" rel="noopener noreferrer"
+                    class="speaktosales">
+                    <button
+                      class="greenButton text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Start
+                      Free Trail</button></a>
+                  <a href="https://supplycompass.com/about-supplycompass/#contact" rel="noopener noreferrer">
+                    <button
+                      class="yellowButton ml-5 text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Speak
+                      to Sales</button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col mb-4">
-          <label class=mb-1">How many people work in your production team? (production managers, designers,
-            creative director etc.)
-            <!-- (Designers, Product
-            Dev,Garment Tech, Production Managers, Merchandisers) -->
-          </label>
-          <input id="people" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+        <div class="modal fade" id="myModal" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content" style="height:520px;position: relative;">
+              <button id='close-and-calculate-button' type="button" style="position: absolute;top:10px;right:10px;"
+                data-dismiss="modal"><i class="fa fa-close text-xl"></i></button>
+              <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style="height:100%;width:100%"
+                frameborder="0" scrolling="no" id="iframe"></iframe>
+            </div>
+          </div>
         </div>
-      </form>
-      <div>
-        <button id="calculate-button"
-          class="greenButton text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm"
-          data-toggle="modal" data-target="#myModal">Calculate</button>
-      </div>
-    </div>
-    <div id="result" class="formContainer flex flex-col p-10 Karla">
-      <p class="text-4xl cooper font-bold mb-4">Based on your inputs and our industry data:</p>
-      <p class='mb-4'>
-        As a business, you spend <b id="costSpentManagement"></b> per year managing production.<br /><br />
-        That's approx <b id="revenueSpentOnManage"></b> of your total revenue spent on managing production. <br /><br />
-        You are spending <b id='hrsManagingProd'></b> hrs managing production.<br /><br /> That's <b
-          id="prdManTimePerStyle"></b> hrs for
-        every style
-        you produce.
-      </p>
-
-
-      <p class="text-3xl cooper font-bold my-6">SupplyCompass can streamline your Production:</p>
-
-      <p id='streamLineResult'>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your
-        time.<br /><br />
-        Giving you a <b>net saving of <span id="netSavings"></span></b> every year.<br /><br />
-        That's a <b><span id="returnCost"></span> return on investment</b> in our platform.</p>
-      <p id='negativeResult' class='border-l-4 border-gray-400 p-2'>By our calculations, you manage your production very
-        effectively.
-        We'd love to speak to you
-        about the other ways
-        SupplyCompass can help your business grow.</p>
-
-      <div class='flex mt-6'>
-        <a href="https://platform.supplycompass.com/register/1" rel="noopener noreferrer">
-          <button class="greenButton text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Start
-            Free Trail</button></a>
-        <a href="https://supplycompass.com/about-supplycompass/#contact" rel="noopener noreferrer">
-          <button
-            class="yellowButton ml-5 text-white flex items-center capitalize font-semibold py-3 px-6 rounded-sm">Speak
-            to Sales</button>
-        </a>
-      </div>
-      <div class='mt-2'>
-        <button id="reenter"
-          class="text-sm underline flex items-center capitalize font-semibold rounded-sm">Recalulate</button>
-      </div>
-    </div>
-    <div class="w-4/12 flex flex-col">
-      <div class="flex flex-col ml-10 mt-10">
-        <p id='inputsTab' class=pl-3 py-1 m-1 Karla tabTextColor'>Inputs</p>
-        <p id='resultTab' class=pl-3 py-1 m-1 Karla tabTextColor'>Results</p>
-      </div>
-      <div class='flex  m-1 mt-5'>
-        <img src='https://public-uploads.supplycompass.com/assets/spend-calculator/ro-illustration.png
-' alt='illustrations' />
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <div class="modal-content" style="height:520px;position: relative;">
-        <button type="button" style="position: absolute;top:10px;right:10px;" data-dismiss="modal"><i
-            class="fa fa-close text-xl"></i></button>
-        <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style="height:100%;width:100%"
-          frameborder="0" scrolling="no" id="iframe"></iframe>
-      </div>
-
-    </div>
-  </div>
 </body>
 
 </html>
