@@ -305,7 +305,32 @@
           alert("please fill the fields");
         }
       });
+
+      // $('#iframeform').contents().find('button').click(function () {
+      //   alert('click');
+      // });
+
+      // $('#iframeform').on("load", function () {
+      //   alert('hi')
+      // })
+
+      // $('#close-and-calculate-button').click(closeClick)
+
+      $('#iframeform').on('load', function () {
+
+        var iframe = $('#iframeform').contents();
+
+        iframe.find(".hs-form__actions__submit").click(function () {
+          alert("test");
+        });
+      });
+
     });
+
+    function closeClick() {
+      console.log(document.getElementById("iframeform").contentWindow.document.body.getElementsByClassName("hs-form__thankyou-message"))
+    }
+
   </script>
 </head>
 
@@ -403,8 +428,8 @@
             <div class="modal-content" style="height:520px;position: relative;">
               <button id='close-and-calculate-button' type="button" style="position: absolute;top:10px;right:10px;"
                 data-dismiss="modal"><i class="fa fa-close text-xl"></i></button>
-              <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style="height:100%;width:100%"
-                frameborder="0" scrolling="no" id="iframe"></iframe>
+              <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style=" height:100%;width:100%"
+                frameborder="0" scrolling="no" id="iframeform"></iframe>
             </div>
           </div>
         </div>
