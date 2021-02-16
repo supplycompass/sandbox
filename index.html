@@ -15,6 +15,7 @@
       color: rgba(0, 0, 0, 0.54);
       padding: 0;
       font-family: Karla, sans-serif;
+      margin-bottom: 8px;
     }
 
     .field-container {
@@ -99,8 +100,77 @@
       box-shadow: 0px 8px 12px rgba(9, 30, 66, 0.15);
     }
 
+
+
+
     .speaktosales:hover {
       text-decoration: none;
+    }
+
+    @media only screen and (min-width: 1441px) {
+      label {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+
+      .output {
+        font-size: 22px;
+      }
+
+      input {
+        min-height: 50px;
+        padding-left: 8px;
+        border-radius: 3px;
+        font-size: 22px;
+      }
+
+      .text-5xl {
+        font-size: 4rem;
+      }
+
+      .text-3xl {
+        font-size: 3rem;
+      }
+
+      br {
+        margin-bottom: 3px;
+      }
+
+      .logo {
+        width: 75px;
+        height: 75px;
+        margin-bottom: 15px;
+      }
+
+      .field-container {
+        margin-bottom: 12.5px;
+      }
+
+      .greenButton {
+        font-size: 22px;
+        padding: 10px;
+      }
+
+      .yellowButton {
+        font-size: 22px;
+        padding: 10px;
+      }
+
+      .text-base {
+        font-size: 15px;
+      }
+
+      .boxContainer {
+        padding: 35px 25px;
+      }
+
+      .modal-content {
+        width: 900px;
+      }
+
+      .text-xl {
+        font-size: 3rem
+      }
     }
   </style>
   <script>
@@ -250,11 +320,11 @@
         <div id="inputForm">
           <p class="text-5xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
           <div class="flex justify-between w-full mt-8">
-            <div class="w-6/12">
-              <div class="boxContainer w-full bg-white p-8 rounded-lg">
+            <div class="w-7/12">
+              <div class="w-full bg-white p-8 rounded-lg boxContainer">
                 <form>
-                  <div class="flex flex-col mb-4">
-                    <label class="mb-2">How many styles do you produce per year?</label>
+                  <div class="flex flex-col mb-4 field-container">
+                    <label>How many styles do you produce per year?</label>
                     <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
                   </div>
                   <div class="flex flex-col mb-4">
@@ -275,7 +345,7 @@
                 </div>
               </div>
             </div>
-            <div class='w-4/12 bg-gray-200 rounded-full p-10'>
+            <div class='w-4/12 bg-gray-200 rounded-full p-10' style="height:max-content;">
               <img src='https://public-uploads.supplycompass.com/assets/spend-calculator/ro-illustration.png
           ' alt='illustrations' />
             </div>
@@ -284,7 +354,7 @@
         <div id="result">
           <p class="text-5xl cooper font-bold mb-4">Based on your inputs and our industry data</p>
           <div class="flex justify-between w-full mt-8">
-            <div class="boxContainer w-full w-full bg-white p-8 rounded-lg">
+            <div class="boxContainer w-full w-full bg-white p-8 rounded-lg output">
               <p class='mb-4'>
                 As a business, you spend <b id="costSpentManagement"></b> per year managing production.<br /><br />
                 That's approx <b id="revenueSpentOnManage"></b> of your total revenue spent on managing production.
