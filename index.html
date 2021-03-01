@@ -15,13 +15,14 @@
       color: rgba(0, 0, 0, 0.54);
       padding: 0;
       font-family: Karla, sans-serif;
-      margin-bottom: 8px;
+      font-size: 20px;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
     }
 
     .field-container {
-      margin-top: 5px;
-      /* display: flex;
-        justify-content: flex-end; */
+      margin-top: 12.5px;
+
     }
 
     input[type="number"]::-webkit-inner-spin-button,
@@ -41,12 +42,15 @@
     }
 
     input {
-      min-height: 40px;
-      padding-left: 5px;
+      /* min-height: 40px;
+      padding-left: 5px; */
       /* margin-bottom: 1px; */
       border: 2px solid #f6f6ff;
       outline: none;
       border-radius: 3px;
+      min-height: 50px;
+      padding-left: 8px;
+      font-size: 20px;
     }
 
     input:hover {
@@ -65,6 +69,9 @@
     .greenButton {
       font-family: "Karla", sans-serif;
       background-color: #145F58;
+      font-size: 20px;
+      padding: 10px;
+
     }
 
     .greenButton:disabled {
@@ -75,6 +82,9 @@
     .yellowButton {
       font-family: "Karla", sans-serif;
       background-color: #E5A500;
+      font-size: 20px;
+      padding: 10px;
+
     }
 
     .tabTextColor {
@@ -91,8 +101,8 @@
     }
 
     .logo {
-      width: 60px;
-      height: 60px;
+      width: 75px;
+      height: 75px;
       margin-bottom: 15px;
     }
 
@@ -107,71 +117,31 @@
       text-decoration: none;
     }
 
-    @media only screen and (min-width: 1441px) {
-      label {
-        font-size: 22px;
-        margin-bottom: 10px;
-      }
+    .centerContainer {
+      width: 70%;
+    }
 
-      .output {
-        font-size: 22px;
-      }
-
-      input {
-        min-height: 50px;
-        padding-left: 8px;
-        border-radius: 3px;
-        font-size: 22px;
-      }
-
-      .text-5xl {
-        font-size: 4rem;
-      }
-
-      .text-3xl {
-        font-size: 3rem;
-      }
-
-      br {
-        margin-bottom: 3px;
-      }
-
-      .logo {
-        width: 75px;
-        height: 75px;
-        margin-bottom: 15px;
-      }
-
-      .field-container {
-        margin-bottom: 12.5px;
-      }
-
-      .greenButton {
-        font-size: 22px;
-        padding: 10px;
-      }
-
-      .yellowButton {
-        font-size: 22px;
-        padding: 10px;
-      }
-
-      .text-base {
-        font-size: 15px;
-      }
-
-      .boxContainer {
-        padding: 35px 25px;
-      }
-
-      .modal-content {
-        width: 900px;
-      }
-
-      .text-xl {
-        font-size: 3rem
+    @media only screen and (max-width: 1200px) {
+      .centerContainer {
+        width: 100%;
       }
     }
+
+    .output {
+      font-size: 22px;
+    }
+
+    br {
+      margin-bottom: 3px;
+    }
+
+    .boxContainer {
+      padding: 35px 25px;
+    }
+
+    /* .modal-content {
+      width: 900px;
+    } */
   </style>
   <script>
     var styles = "";
@@ -305,62 +275,43 @@
           alert("please fill the fields");
         }
       });
-
-      // $('#iframeform').contents().find('button').click(function () {
-      //   alert('click');
-      // });
-
-      // $('#iframeform').on("load", function () {
-      //   alert('hi')
-      // })
-
-      // $('#close-and-calculate-button').click(closeClick)
-
-      $('#iframeform').on('load', function () {
-
-        var iframe = $('#iframeform').contents();
-
-        iframe.find(".hs-form__actions__submit").click(function () {
-          alert("test");
-        });
-      });
-
     });
 
-    function closeClick() {
-      console.log(document.getElementById("iframeform").contentWindow.document.body.getElementsByClassName("hs-form__thankyou-message"))
-    }
+
 
   </script>
 </head>
 
 <body>
   <div class="flex relative bg-gray-100">
-    <!-- <a href='https://supplycompass.com/pricing/' class='absolute text-3xl cursor-pointer' style="top:20px;right:20px">
+    <!-- <a href='https://supplycompass.com/pricing/' class='absolute text-5xl cursor-pointer' style="top:20px;right:20px">
       <i class="fa fa-close"></i></a> -->
     <div class="formContainer flex flex-col items-center justify-center py-10 px-16">
-      <div style="width:70%">
+      <div class="centerContainer">
         <img class="logo" src='https://public-uploads.supplycompass.com/assets/platform/logo/logo-icon.svg'
           alt='logo' />
         <div id="inputForm">
-          <p class="text-5xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p>
-          <div class="flex justify-between w-full mt-8">
+          <!-- <p class="text-6xl cooper font-bold mb-4">How much could you save by using Supply Compass ?</p> -->
+          <div class="flex justify-between w-full mt-10">
             <div class="w-7/12">
               <div class="w-full bg-white p-8 rounded-lg boxContainer">
                 <form>
                   <div class="flex flex-col mb-4 field-container">
-                    <label>How many styles do you produce per year?</label>
-                    <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                    <label class="karla">How many styles do you produce per year?</label>
+                    <input id="styles" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2 font-bold" />
                   </div>
                   <div class="flex flex-col mb-4">
-                    <label class="mb-2">How many units (on average) do you produce per style?</label>
-                    <input id="units" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                    <label class="mb-2 karla">How many units (on average) do you produce per style?</label>
+                    <input class="font-bold" id="units" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                      class="py-2 font-bold" />
                   </div>
                   <div class="flex flex-col mb-4">
-                    <label class="mb-2">How many people work in your production team? (production managers, designers,
+                    <label class="mb-2 karla">How many people work in your production team? (production managers,
+                      designers,
                       creative director etc.)
                     </label>
-                    <input id="people" oninput="this.value=this.value.replace(/[^0-9]/g,'');" class="py-2" />
+                    <input class="font-bold" id="people" oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+                      class="py-2 font-bold" />
                   </div>
                 </form>
                 <div class="mt-10">
@@ -377,9 +328,9 @@
           </div>
         </div>
         <div id="result">
-          <p class="text-5xl cooper font-bold mb-4">Based on your inputs and our industry data</p>
+          <p class="text-6xl cooper font-bold mb-4">Based on your inputs and our industry data</p>
           <div class="flex justify-between w-full mt-8">
-            <div class="boxContainer w-full w-full bg-white p-8 rounded-lg output">
+            <div class="boxContainer w-full w-full bg-white p-8 rounded-lg output karla ">
               <p class='mb-4'>
                 As a business, you spend <b id="costSpentManagement"></b> per year managing production.<br /><br />
                 That's approx <b id="revenueSpentOnManage"></b> of your total revenue spent on managing production.
@@ -389,7 +340,7 @@
                 every style
                 you produce.
               </p>
-              <p class="text-3xl cooper font-bold my-6">SupplyCompass can streamline your Production:</p>
+              <p class="text-5xl cooper font-bold my-6">SupplyCompass can streamline your Production:</p>
 
               <p id='streamLineResult'>We estimate <b>we can save you <span id="timeSaved"></span> hrs</b> of your
                 time.<br /><br />
@@ -417,7 +368,7 @@
                 </div>
                 <div class="mt-2">
                   <button id="reenter"
-                    class="text-base underline flex items-center capitalize font-semibold rounded-sm">Recalulate</button>
+                    class="text-3xl underline flex items-center capitalize font-semibold rounded-sm">Recalulate</button>
                 </div>
               </div>
             </div>
@@ -427,7 +378,7 @@
           <div class="modal-dialog">
             <div class="modal-content" style="height:520px;position: relative;">
               <button id='close-and-calculate-button' type="button" style="position: absolute;top:10px;right:10px;"
-                data-dismiss="modal"><i class="fa fa-close text-xl"></i></button>
+                data-dismiss="modal"><i class="fa fa-close text-5xl"></i></button>
               <iframe src='https://share.hsforms.com/1Y13taLLWSVyJyyZUVVQ7ew2f9jx' style=" height:100%;width:100%"
                 frameborder="0" scrolling="no" id="iframeform"></iframe>
             </div>
